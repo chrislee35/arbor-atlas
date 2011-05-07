@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{arbor-atlas}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Lee"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "arbor-atlas.gemspec",
     "lib/arbor-atlas.rb",
     "lib/arbor-atlas/arbor-atlas.rb",
     "test/helper.rb",
