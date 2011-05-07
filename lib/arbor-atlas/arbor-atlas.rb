@@ -80,6 +80,11 @@ module Arbor
 			lookup_ip(cidr)
 		end
 		
+		def lookup_service(port)
+			doc = _get("service/#{port.downcase}",{'out'=>'xml'})
+			Crack::XML.parse(doc)
+		end
+		
 		def lookup(item)
 			if item =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(\/\d{1,2})?$/
 				lookup_ip(item)
@@ -89,6 +94,8 @@ module Arbor
 				lookup_cve(item)
 			elsif item =~ /^\w{2}$/i
 				lookup_cc(item)
+			elsif item =~ /^(UDP|TCP)\/\d{1,5}$/i
+				lookup_service(item)
 			else
 				raise ArgumentError, "unknown query type for item: #{item}"
 			end

@@ -20,7 +20,7 @@ class TestArborAtlas < Test::Unit::TestCase
 		assert_not_nil(ipinfo['report']['attacks'])
 		assert_not_nil(ipinfo['report']['servers'])
 	end
-	
+
 	should "return network report on 1.2.3.0/24" do
 		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
 		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
@@ -40,7 +40,7 @@ class TestArborAtlas < Test::Unit::TestCase
 		assert_not_nil(ipinfo['report']['attacks'])
 		assert_not_nil(ipinfo['report']['servers'])
 	end
-	
+
 	should "return network as report for AS701" do
 		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
 		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
@@ -59,7 +59,7 @@ class TestArborAtlas < Test::Unit::TestCase
 		assert_not_nil(ipinfo['report']['servers'])
 		assert_not_nil(ipinfo['report']['dos_attacks'])
 	end
-	
+
 	should "return vulnerability report for CVE-2006-4139" do
 		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
 		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
@@ -75,8 +75,8 @@ class TestArborAtlas < Test::Unit::TestCase
 		assert_equal("Race condition in Sun Solaris 10 allows attackers to cause a denial of service (system panic) via unspecified vectors related to ifconfig and either netstat or SNMP queries.", ipinfo['report']['background']['description'])
 		assert_not_nil(ipinfo['report']['attacks'])
 	end
-	
-	should "return country report report for US" do
+
+	should "return country report for US" do
 		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
 		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
 		assert_not_nil(a.cookie)
@@ -89,7 +89,21 @@ class TestArborAtlas < Test::Unit::TestCase
 		assert_not_nil(ipinfo['report']['dos_attacks'])
 		assert_not_nil(ipinfo['report']['servers'])
 	end
-	
+
+	should "return service report for tcp/445" do
+		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
+		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
+		assert_not_nil(a.cookie)
+		ipinfo = a.lookup("tcp/445")
+		assert_not_nil(ipinfo['report'])
+		assert_not_nil(ipinfo['report']['title'])
+		assert_equal("ATLAS Service Report: Global TCP/445 (microsoft-ds)", ipinfo['report']['title'])
+		assert_not_nil(ipinfo['report']['scans'])
+		assert_not_nil(ipinfo['report']['background'])
+		assert_not_nil(ipinfo['report']['attacks'])
+		assert_not_nil(ipinfo['report']['vulnerabilities'])
+	end
+
 	should "raise exception on unknown query type" do
 		raise "You must set ARBORUSER and ARBORPASS in your environment before running tests" unless ENV['ARBORUSER'] and ENV['ARBORPASS']
 		a = Arbor::Atlas.new(ENV['ARBORUSER'], ENV['ARBORPASS'])
