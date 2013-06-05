@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+require 'arbor/atlas'
+require 'configparser'
+require 'pp'
+
+# need to parse arguments, then the config
+configfile = ENV['HOME']+"/.arbor"
+
+if ARGV.length > 0 and File.exist?(ARGV[0])
+	configfile = ARGV.shift
+end
+
+if not File.exist?(configfile)
+	puts "You must specify a configuration file or create one at #{ENV['HOME']}/.arbor"
+	exit
+end
+
+config = ConfigParser.new(configfile)
+user = config['arbor']['user']
+pass = config['arbor']['password']
+a = Arbor::Atlas.new(user,pass)
+if ARGV.length > 0
+	ARGV.each do |item|
+		pp a.lookup(item)
+	end
+else
+	$stdin.each_line do |item|
+		pp a.lookup(item.chomp)
+	end
+end
