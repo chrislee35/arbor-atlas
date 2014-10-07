@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-	require 'arbor-atlas'
+	require 'arbor/atlas'
 	username = "your atlas username"
 	password = "your atlas password"
 	arbor = Arbor::Atlas.new(username, password)
